@@ -1,5 +1,9 @@
 # 🍕 Pizzaro
 
+<p align="center">
+  <img src="https://github.com/HammasT1/Pizzaro/blob/main/android/app/src/main/res/playstore.png?raw=true" width="120" alt="Pizzaro app icon" />
+</p>
+
 A production-style Flutter app for browsing and customizing pizzas, built around
 native, hand-tuned animations — Hero flights, a drag-responsive fake-3D pizza
 viewer, spring/elastic size transitions, and sequenced screen reveals — using

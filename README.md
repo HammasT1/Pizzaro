@@ -11,6 +11,14 @@ only Flutter's own animation APIs.
   <img src="https://github.com/HammasT1/Pizzaro/blob/main/assets/images/pizzas/Add%20-to-cart.jpeg?raw=true" width="30%" alt="Add to Cart Screen" />
 </p>
 
+## Demo
+
+<p align="center">
+  <img src="https://github.com/HammasT1/Pizzaro/blob/main/assets/images/pizzas/pizzaro-GIF-compressed.gif?raw=true" width="60%" alt="Pizzaro demo GIF" />
+</p>
+
+<p align="center"><em>Live run of the app — home grid, hero-flight detail screen, drag-to-rotate 3D viewer, and cart, all in motion.</em></p>
+
 ## Overview
 
 Pizzaro is a mobile-first menu/ordering flow: a filterable pizza grid, a

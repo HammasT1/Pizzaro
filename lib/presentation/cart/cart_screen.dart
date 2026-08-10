@@ -43,18 +43,26 @@ class _CartScreenState extends ConsumerState<CartScreen> {
       final alreadyTracked = _items.any((item) => item.id == next[i].id);
       if (!alreadyTracked) {
         _items.insert(i, next[i]);
-        _listKey.currentState?.insertItem(i, duration: AppDurations.cartRowAnimation);
+        _listKey.currentState?.insertItem(
+          i,
+          duration: AppDurations.cartRowAnimation,
+        );
       }
     }
   }
 
   Widget _buildTile(CartItem snapshot, Animation<double> animation) {
     return SizeTransition(
-      sizeFactor: CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
-      alignment: const Alignment(-1.0, 0.0),
+      sizeFactor: CurvedAnimation(
+        parent: animation,
+        curve: Curves.easeOutCubic,
+      ),
+      axisAlignment: 0.0,
       child: SlideTransition(
         position: Tween<Offset>(begin: const Offset(0.06, 0), end: Offset.zero)
-            .animate(CurvedAnimation(parent: animation, curve: Curves.easeOutCubic)),
+            .animate(
+              CurvedAnimation(parent: animation, curve: Curves.easeOutCubic),
+            ),
         child: FadeTransition(
           opacity: animation,
           child: Padding(
@@ -63,12 +71,17 @@ class _CartScreenState extends ConsumerState<CartScreen> {
               builder: (context, ref, _) {
                 final current = ref
                     .watch(cartProvider)
-                    .firstWhere((item) => item.id == snapshot.id, orElse: () => snapshot);
+                    .firstWhere(
+                      (item) => item.id == snapshot.id,
+                      orElse: () => snapshot,
+                    );
                 return CartItemTile(
                   item: current,
-                  onRemove: () => ref.read(cartProvider.notifier).removeItem(current.id),
-                  onQuantityChanged: (quantity) =>
-                      ref.read(cartProvider.notifier).updateQuantity(current.id, quantity),
+                  onRemove: () =>
+                      ref.read(cartProvider.notifier).removeItem(current.id),
+                  onQuantityChanged: (quantity) => ref
+                      .read(cartProvider.notifier)
+                      .updateQuantity(current.id, quantity),
                 );
               },
             ),
@@ -94,7 +107,8 @@ class _CartScreenState extends ConsumerState<CartScreen> {
                     key: _listKey,
                     padding: const EdgeInsets.all(AppSpacing.md),
                     initialItemCount: _items.length,
-                    itemBuilder: (context, index, animation) => _buildTile(_items[index], animation),
+                    itemBuilder: (context, index, animation) =>
+                        _buildTile(_items[index], animation),
                   ),
           ),
           _TotalBar(total: total),
@@ -115,7 +129,13 @@ class _TotalBar extends StatelessWidget {
       padding: const EdgeInsets.all(AppSpacing.lg),
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        boxShadow: [BoxShadow(color: AppColors.shadow, blurRadius: 16, offset: Offset(0, -4))],
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.shadow,
+            blurRadius: 16,
+            offset: Offset(0, -4),
+          ),
+        ],
       ),
       child: SafeArea(
         top: false,
@@ -140,9 +160,16 @@ class _EmptyCart extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.shopping_bag_outlined, size: 56, color: AppColors.textSecondary),
+          const Icon(
+            Icons.shopping_bag_outlined,
+            size: 56,
+            color: AppColors.textSecondary,
+          ),
           const SizedBox(height: AppSpacing.sm),
-          Text('Your cart is empty', style: Theme.of(context).textTheme.titleMedium),
+          Text(
+            'Your cart is empty',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
         ],
       ),
     );

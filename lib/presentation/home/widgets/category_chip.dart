@@ -27,32 +27,33 @@ class CategoryChip extends StatelessWidget {
         child: AnimatedContainer(
           duration: AppDurations.chipSelect,
           curve: AppCurves.chipSelect,
-          padding: const EdgeInsets.symmetric(
-            horizontal: AppSpacing.md,
-            vertical: AppSpacing.sm,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
           decoration: BoxDecoration(
-            color: selected ? AppColors.chipBackgroundSelected : AppColors.chipBackground,
+            color: selected
+                ? AppColors.chipBackgroundSelected
+                : AppColors.chipBackground,
             borderRadius: BorderRadius.circular(AppSpacing.chipRadius),
             boxShadow: selected
                 ? [
                     BoxShadow(
                       color: AppColors.primary.withValues(alpha: 0.35),
                       blurRadius: 12,
-                      offset: const Offset(0, 4),
+                      offset: const Offset(0, 0),
                     ),
                   ]
                 : const [],
           ),
-          child: AnimatedDefaultTextStyle(
-            duration: AppDurations.chipSelect,
-            curve: AppCurves.chipSelect,
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.w600,
-              color: selected ? Colors.white : AppColors.textPrimary,
+          child: Center(
+            child: AnimatedDefaultTextStyle(
+              duration: AppDurations.chipSelect,
+              curve: AppCurves.chipSelect,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: selected ? Colors.white : AppColors.textPrimary,
+              ),
+              child: Text(label),
             ),
-            child: Text(label),
           ),
         ),
       ),

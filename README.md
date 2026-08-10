@@ -23,6 +23,12 @@ only Flutter's own animation APIs.
 
 <p align="center"><em>Live run of the app — home grid, hero-flight detail screen, drag-to-rotate 3D viewer, and cart, all in motion.</em></p>
 
+## App Icon (Mobile View)
+
+<p align="center">
+  <img src="https://github.com/HammasT1/Pizzaro/blob/main/assets/images/pizzas/App-Icon-Mobile-View.jpeg?raw=true" width="200" alt="Pizzaro app icon on mobile home screen" />
+</p>
+
 ## Overview
 
 Pizzaro is a mobile-first menu/ordering flow: a filterable pizza grid, a

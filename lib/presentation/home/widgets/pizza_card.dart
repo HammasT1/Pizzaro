@@ -46,14 +46,16 @@ class _PizzaCardState extends State<PizzaCard> {
           borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
           child: InkWell(
             borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-            onTap: () => Navigator.of(context).push(buildPizzaDetailRoute(pizza)),
+            onTap: () =>
+                Navigator.of(context).push(buildPizzaDetailRoute(pizza)),
             child: Container(
               padding: const EdgeInsets.all(AppSpacing.md),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(AppSpacing.cardRadius),
-                boxShadow: const [
-                  BoxShadow(color: AppColors.shadow, blurRadius: 14, offset: Offset(0, 6)),
-                ],
+                border: Border.all(
+                  color: AppColors.primary.withValues(alpha: 0.2),
+                  width: 1,
+                ),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,7 +64,10 @@ class _PizzaCardState extends State<PizzaCard> {
                     child: Center(
                       child: Hero(
                         tag: 'pizza-image-${pizza.id}',
-                        child: Image.asset(pizza.imagePath, fit: BoxFit.contain),
+                        child: Image.asset(
+                          pizza.imagePath,
+                          fit: BoxFit.contain,
+                        ),
                       ),
                     ),
                   ),
@@ -78,15 +83,25 @@ class _PizzaCardState extends State<PizzaCard> {
                     pizza.description,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.bodyMedium,
+                    style: Theme.of(context).textTheme.labelSmall,
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(
-                    'From ${formatPrice(pizza.basePrice)}',
-                    style: const TextStyle(
-                      color: AppColors.primary,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 15,
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 10,
+                      vertical: 5,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: AppColors.primary.withAlpha(35),
+                    ),
+                    child: Text(
+                      'From ${formatPrice(pizza.basePrice)}',
+                      style: const TextStyle(
+                        color: AppColors.primary,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15,
+                      ),
                     ),
                   ),
                 ],

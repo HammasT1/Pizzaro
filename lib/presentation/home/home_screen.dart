@@ -43,7 +43,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
   }
 
   void _handleScroll() {
-    final progress = (_scrollController.offset / _scrollFadeDistance).clamp(0.0, 1.0);
+    final progress = (_scrollController.offset / _scrollFadeDistance).clamp(
+      0.0,
+      1.0,
+    );
     _scrollProgress.value = progress;
   }
 
@@ -75,7 +78,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
               children: [
                 const SizedBox(height: FloatingHomeAppBar.reservedSpace),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: AppSpacing.md,
+                  ),
                   child: Text(
                     'Find your next favorite pizza',
                     style: Theme.of(context).textTheme.headlineMedium,
@@ -86,13 +91,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                   height: 40,
                   child: ListView(
                     scrollDirection: Axis.horizontal,
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.md,
+                    ),
                     children: [
                       CategoryChip(
                         label: 'All',
                         selected: selectedCategory == null,
-                        onTap: () =>
-                            ref.read(selectedCategoryProvider.notifier).select(null),
+                        onTap: () => ref
+                            .read(selectedCategoryProvider.notifier)
+                            .select(null),
                       ),
                       const SizedBox(width: AppSpacing.sm),
                       for (final category in PizzaCategory.values) ...[
@@ -111,14 +119,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
                 const SizedBox(height: AppSpacing.sm),
                 Expanded(
                   child: pizzasAsync.when(
-                    loading: () => const Center(child: CircularProgressIndicator()),
+                    loading: () =>
+                        const Center(child: CircularProgressIndicator()),
                     error: (error, stackTrace) =>
                         Center(child: Text('Could not load menu: $error')),
                     data: (pizzas) {
                       if (pizzas.isEmpty) {
-                        return const Center(child: Text('No pizzas in this category yet.'));
+                        return const Center(
+                          child: Text('No pizzas in this category yet.'),
+                        );
                       }
                       return GridView.builder(
+                        physics: BouncingScrollPhysics(),
                         controller: _scrollController,
                         padding: const EdgeInsets.fromLTRB(
                           AppSpacing.md,
@@ -151,9 +163,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen>
           FloatingHomeAppBar(
             cartCount: cartCount,
             scrollProgress: _scrollProgress,
-            onCartTap: () => Navigator.of(context).push(
-              MaterialPageRoute(builder: (_) => const CartScreen()),
-            ),
+            onCartTap: () => Navigator.of(
+              context,
+            ).push(MaterialPageRoute(builder: (_) => const CartScreen())),
           ),
         ],
       ),

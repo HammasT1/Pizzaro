@@ -37,9 +37,6 @@ class _PizzaDetailScreenState extends ConsumerState<PizzaDetailScreen>
   @override
   void initState() {
     super.initState();
-    // The details panel intentionally waits for the Hero flight
-    // (AppDurations.heroFlight) to finish before revealing, so the two
-    // animations read as sequenced rather than simultaneous.
     Future.delayed(AppDurations.heroFlight, () {
       if (mounted) _panelController.forward();
     });
@@ -65,7 +62,10 @@ class _PizzaDetailScreenState extends ConsumerState<PizzaDetailScreen>
               child: Stack(
                 children: [
                   Center(
-                    child: Pizza3DViewer(pizza: pizza, sizeScale: _selectedSize.visualScale),
+                    child: Pizza3DViewer(
+                      pizza: pizza,
+                      sizeScale: _selectedSize.visualScale,
+                    ),
                   ),
                   Positioned(
                     left: AppSpacing.md,
@@ -119,29 +119,43 @@ class _DetailPanel extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.fromLTRB(AppSpacing.lg, AppSpacing.lg, AppSpacing.lg, AppSpacing.md),
+      padding: const EdgeInsets.fromLTRB(
+        AppSpacing.lg,
+        AppSpacing.lg,
+        AppSpacing.lg,
+        AppSpacing.md,
+      ),
       decoration: const BoxDecoration(
         color: AppColors.surface,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(AppSpacing.sheetRadius)),
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(AppSpacing.sheetRadius),
+        ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
             child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
                       Expanded(
-                        child: Text(pizza.name, style: Theme.of(context).textTheme.headlineMedium),
+                        child: Text(
+                          pizza.name,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
                       ),
                       _CategoryBadge(category: pizza.category),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.sm),
-                  Text(pizza.description, style: Theme.of(context).textTheme.bodyMedium),
+                  Text(
+                    pizza.description,
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                   const SizedBox(height: AppSpacing.lg),
                   Text('Size', style: Theme.of(context).textTheme.titleMedium),
                   const SizedBox(height: AppSpacing.sm),
@@ -151,13 +165,17 @@ class _DetailPanel extends ConsumerWidget {
                     onChanged: onSizeChanged,
                   ),
                   const SizedBox(height: AppSpacing.lg),
-                  Text('Ingredients', style: Theme.of(context).textTheme.titleMedium),
+                  Text(
+                    'Ingredients',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
                   const SizedBox(height: AppSpacing.sm),
                   Wrap(
                     spacing: AppSpacing.sm,
                     runSpacing: AppSpacing.sm,
                     children: [
-                      for (final ingredient in pizza.ingredients) _IngredientPill(label: ingredient),
+                      for (final ingredient in pizza.ingredients)
+                        _IngredientPill(label: ingredient),
                     ],
                   ),
                   const SizedBox(height: AppSpacing.md),
@@ -172,7 +190,9 @@ class _DetailPanel extends ConsumerWidget {
               Expanded(
                 flex: 2,
                 child: AddToCartButton(
-                  onConfirmed: () => ref.read(cartProvider.notifier).addItem(pizza, selectedSize),
+                  onConfirmed: () => ref
+                      .read(cartProvider.notifier)
+                      .addItem(pizza, selectedSize),
                 ),
               ),
             ],
@@ -192,15 +212,15 @@ class _CircleIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: AppColors.surface,
+      color: AppColors.primary,
       shape: const CircleBorder(),
-      elevation: 2,
+      elevation: 0,
       child: InkWell(
         customBorder: const CircleBorder(),
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(AppSpacing.sm),
-          child: Icon(icon, size: 18, color: AppColors.textPrimary),
+          padding: const EdgeInsets.all(AppSpacing.md),
+          child: Icon(icon, size: 18, color: AppColors.background),
         ),
       ),
     );
@@ -214,17 +234,19 @@ class _CategoryBadge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final color = category == PizzaCategory.veg ? AppColors.accent : AppColors.primary;
+    final color = category == PizzaCategory.veg
+        ? AppColors.accent
+        : AppColors.primary;
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.sm, vertical: 4),
+      height: 30,
+      width: 30,
+      padding: EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.12),
-        borderRadius: BorderRadius.circular(AppSpacing.chipRadius),
+        border: Border.all(color: color, width: 4),
+        borderRadius: BorderRadius.circular(5),
       ),
-      child: Text(
-        category.label,
-        style: TextStyle(color: color, fontSize: 12, fontWeight: FontWeight.w700),
-      ),
+      child: CircleAvatar(backgroundColor: color),
     );
   }
 }
@@ -237,14 +259,21 @@ class _IngredientPill extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: AppSpacing.md, vertical: AppSpacing.xs),
+      padding: const EdgeInsets.symmetric(
+        horizontal: AppSpacing.md,
+        vertical: AppSpacing.xs,
+      ),
       decoration: BoxDecoration(
-        color: AppColors.chipBackground,
+        color: AppColors.primary.withAlpha(50),
         borderRadius: BorderRadius.circular(AppSpacing.chipRadius),
       ),
       child: Text(
         label,
-        style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600, color: AppColors.textPrimary),
+        style: const TextStyle(
+          fontSize: 13,
+          fontWeight: FontWeight.w600,
+          color: AppColors.textPrimary,
+        ),
       ),
     );
   }
